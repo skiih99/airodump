@@ -22,7 +22,7 @@ struct ieee80211_radiotap_header {
         uint32_t it_present;     /* fields present */
 };
 
-struct ieee80211_mac_frame {
+struct ieee80211_frame {
     uint8_t type;
     uint8_t flag;
     uint16_t duration;
@@ -35,6 +35,7 @@ struct ieee80211_mac_frame {
 struct beacon_data {
     uint8_t bssid[6];
     int beacons;
+    int data;
     char essid[200];
     int essid_len;
 };
@@ -42,6 +43,7 @@ struct beacon_data {
 struct probe_data {
     uint8_t bssid[6];
     uint8_t station[6];
+    int frames;
     char probe[200];
     int probe_len;
 };
