@@ -1,11 +1,13 @@
 #include "airodump.h"
 
 int main(int argc, char* argv[]) {
-    
+
     if  (argc != 2) {
         usage();
         return -1;
     }
+    beacon_data_cnt = 0;
+    probe_data_cnt = 0;
 
     char* dev = argv[1];
     char errbuf[PCAP_ERRBUF_SIZE];
@@ -19,5 +21,6 @@ int main(int argc, char* argv[]) {
     airodump_process(handle);
 
     pcap_close(handle);
+    
     return 0;
 }
