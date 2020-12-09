@@ -171,7 +171,8 @@ int check_flag(uint8_t flag) {
 
 void print_airodump(struct beacon_data *bdata, struct probe_data *pdata, struct tm *times, int beacon_data_cnt, int probe_data_cnt) {
     
-    system("clear");
+    //system("clear");
+    printf("\033[H\033[2J");
     printf("\n");
     printf("Custom Airodump by skiii. Time : %04d-%02d-%02d %02d:%02d:%02d\n\n", times->tm_year + 1900, times->tm_mon + 1, times->tm_mday, times->tm_hour, times->tm_min, times->tm_sec);
     printf("BSSID              PWR  Beacons    #Data, #/s  CH   MB   ENC CIPHER  AUTH ESSID\n\n");
@@ -183,7 +184,8 @@ void print_airodump(struct beacon_data *bdata, struct probe_data *pdata, struct 
         printf("           %02d        %02d", bdata[i].beacons, bdata[i].data);
         if (bdata[i].essid_len > 0) {
             printf("                                  ");
-            for (int j = 0; j < bdata[i].essid_len; j++) printf("%c", bdata[i].essid[j]);
+            if (bdata[i].essid[0] != 0x00) for (int j = 0; j < bdata[i].essid_len; j++) printf("%c", bdata[i].essid[j]);
+            else printf("<length: %d>", bdata[i].essid_len);
         }
         printf("\n");
     }
@@ -199,7 +201,7 @@ void print_airodump(struct beacon_data *bdata, struct probe_data *pdata, struct 
             }
         }
 
-        if (!flag) printf("(not associated)");
+        if (!flag) printf("(not associated) ");
         else {
             for (int j = 0; j < 6; j++) {
                 printf("%02X", pdata[i].bssid[j]);
@@ -213,9 +215,9 @@ void print_airodump(struct beacon_data *bdata, struct probe_data *pdata, struct 
             if(j < 5) printf(":");
         }
 
-        printf("                            %d", pdata[i].frames);
+        printf("                          %d", pdata[i].frames);
         if (pdata[i].probe_len > 0) {
-            printf("           ");
+            printf("          ");
             for (int j = 0; j < pdata[i].probe_len; j++) printf("%c", pdata[i].probe[j]);
         }
         printf("\n");
