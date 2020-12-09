@@ -6,8 +6,6 @@ int main(int argc, char* argv[]) {
         usage();
         return -1;
     }
-    beacon_data_cnt = 0;
-    probe_data_cnt = 0;
 
     char* dev = argv[1];
     char errbuf[PCAP_ERRBUF_SIZE];

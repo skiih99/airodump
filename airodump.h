@@ -11,6 +11,7 @@
 #include <net/if_arp.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #define fixed_param_len 12
 
@@ -36,7 +37,7 @@ struct beacon_data {
     uint8_t bssid[6];
     int beacons;
     int data;
-    char essid[200];
+    uint8_t essid[200];
     int essid_len;
 };
 
@@ -44,15 +45,14 @@ struct probe_data {
     uint8_t bssid[6];
     uint8_t station[6];
     int frames;
-    char probe[200];
+    uint8_t probe[200];
     int probe_len;
 };
 #pragma pack(pop)
 
 using namespace std;
 
-int beacon_data_cnt;
-int probe_data_cnt;
 void usage();
+int check_flag(uint8_t flag);
 void airodump_process(pcap_t* handle);
-
+void print_airodump(struct beacon_data *bdata, struct probe_data *pdata, struct tm *times, int beacon_data_cnt, int probe_data_cnt);
